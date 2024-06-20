@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ControleDeUsuarios.Models;
+using ControleDeUsuarios.Repositorio;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,17 @@ namespace ControleDeUsuarios.Controllers
 {
     public class UsuarioController : Controller
     {
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+
+        public UsuarioController(IUsuarioRepositorio usuarioRepositorio)
+        {
+            _usuarioRepositorio = usuarioRepositorio;
+        }
+
         public IActionResult Index()
         {
-            return View();
+          List<UsuarioModel> usuarios = _usuarioRepositorio.BuscarTodos();
+            return View(usuarios);
         }
 
         public IActionResult Criar()
@@ -18,14 +28,36 @@ namespace ControleDeUsuarios.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            return View();
+          UsuarioModel usuario =  _usuarioRepositorio.ListarPorId(id);
+            return View(usuario);
         }
 
-        public IActionResult ApagarConfirmacao()
+        public IActionResult ApagarConfirmacao(int id)
         {
-            return View();
+            UsuarioModel usuario = _usuarioRepositorio.ListarPorId(id);
+            return View(usuario);
+        }
+
+        public IActionResult Apagar (int id)
+        {
+            _usuarioRepositorio.Apagar(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Criar(UsuarioModel usuario)
+        {
+            _usuarioRepositorio.Adicionar(usuario);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Alterar(UsuarioModel usuario)
+        {
+            _usuarioRepositorio.Atualizar(usuario);
+            return RedirectToAction("Index");
         }
     }
 }
