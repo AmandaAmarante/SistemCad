@@ -1,4 +1,4 @@
-﻿using ControleDeUsuarios.Models;
+﻿using SistemaDeCadastro.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ControleDeUsuarios.Controllers
+namespace SistemaDeCadastro.Controllers
 {
     public class HomeController : Controller
     {

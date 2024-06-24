@@ -1,6 +1,6 @@
 using System;
 
-namespace ControleDeUsuarios.Models
+namespace SistemaDeCadastro.Models
 {
     public class ErrorViewModel
     {

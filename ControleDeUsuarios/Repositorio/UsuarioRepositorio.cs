@@ -1,21 +1,28 @@
-﻿using ControleDeUsuarios.Data;
-using ControleDeUsuarios.Models;
+﻿using SistemaDeCadastro.Data;
+using SistemaDeCadastro.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ControleDeUsuarios.Repositorio
+namespace SistemaDeCadastro.Repositorio
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly BancoContext _bancoContext;
+
         public UsuarioRepositorio(BancoContext bancoContext)
         {
-            _bancoContext = bancoContext;
+            this._bancoContext = bancoContext;
         }
 
-        public UsuarioModel ListarPorId(int id)
+        public UsuarioModel BuscarPorLogin(string login)
+        {
+            return _bancoContext.Usuarios.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
+        }
+
+
+        public UsuarioModel BuscarPorID(int id)
         {
             return _bancoContext.Usuarios.FirstOrDefault(x => x.Id == id);
         }
@@ -27,7 +34,7 @@ namespace ControleDeUsuarios.Repositorio
 
         public UsuarioModel Adicionar(UsuarioModel usuario)
         {
-            // gravar no banco de dados
+            usuario.DataCadastro = DateTime.Now;
             _bancoContext.Usuarios.Add(usuario);
             _bancoContext.SaveChanges();
             return usuario;
@@ -35,12 +42,14 @@ namespace ControleDeUsuarios.Repositorio
 
         public UsuarioModel Atualizar(UsuarioModel usuario)
         {
-            UsuarioModel usuarioDB = ListarPorId(usuario.Id);
-            if (usuarioDB == null) throw new System.Exception("Houve um erro na atualização do usuário");
+            UsuarioModel usuarioDB = BuscarPorID(usuario.Id);
+
+            if (usuarioDB == null) throw new Exception("Houve um erro na atualização do usuário!");
+
             usuarioDB.Nome = usuario.Nome;
-            usuarioDB.CPF = usuario.CPF;
-            usuarioDB.DataNascimento = usuario.DataNascimento;
-            usuarioDB.Email = usuario.Email;
+            usuarioDB.Login = usuario.Login;
+            usuarioDB.Perfil = usuario.Perfil;
+            usuarioDB.DataAtualizacao = DateTime.Now;
 
             _bancoContext.Usuarios.Update(usuarioDB);
             _bancoContext.SaveChanges();
@@ -50,9 +59,10 @@ namespace ControleDeUsuarios.Repositorio
 
         public bool Apagar(int id)
         {
-            UsuarioModel usuarioDB = ListarPorId(id);
+            UsuarioModel usuarioDB = BuscarPorID(id);
 
-            if (usuarioDB == null) throw new System.Exception("Houve um erro na deleção do usuário");
+            if (usuarioDB == null) throw new Exception("Houve um erro na deleção do usuário!");
+
             _bancoContext.Usuarios.Remove(usuarioDB);
             _bancoContext.SaveChanges();
 

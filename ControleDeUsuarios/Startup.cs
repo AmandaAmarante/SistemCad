@@ -1,5 +1,5 @@
-using ControleDeUsuarios.Data;
-using ControleDeUsuarios.Repositorio;
+using SistemaDeCadastro.Data;
+using SistemaDeCadastro.Repositorio;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ControleDeUsuarios
+namespace SistemaDeCadastro
 {
     public class Startup
     {
@@ -28,6 +28,8 @@ namespace ControleDeUsuarios
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
+
+            services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
             services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         }
 

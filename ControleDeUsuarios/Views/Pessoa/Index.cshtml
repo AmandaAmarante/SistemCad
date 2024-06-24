@@ -1,16 +1,13 @@
-﻿@model List<UsuarioModel>
+﻿@model List<PessoaModel>
 @{
-    ViewData["Title"] = "Listagem de Usuários";
+    ViewData["Title"] = "Listagem de Pessoas";
 }
-
 <div class="text-center">
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary" asp-controller="Usuario" asp-action="Criar" role="button">Adicionar novo usuário</a>
+        <a class="btn btn-primary" asp-controller="Pessoa" asp-action="Criar" role="button">Adicionar nova pessoa</a>
     </div>
-
     <br />
-
     @if (TempData["MensagemSucesso"] != null)
     {
         <div class="alert alert-success" role="alert">
@@ -29,46 +26,45 @@
 
     <br />
 
-    <h1 class="display-4">Listagem de usuários</h1>
+    <h1 class="display-4">Listagem de Pessoas</h1>
 
-    <table id="table-usuarios" class="display" style="width:100%">
+    <table id="table-pessoas" class="display" style="width:100%">
         <thead>
             <tr>
-                <th scope="col">IdPessoa</th>
+                <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Login</th>
-                <th scope="col">Perfil</th>
-                <th scope="col">Data de cadastro</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Data de nascimento</th>
+                <th scope="col">E-mail</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @if (Model != null && Model.Any())
             {
-                foreach (var usuario in Model)
+                foreach (PessoaModel pessoa in Model)
                 {
                     <tr>
-                        <th scope="row">@usuario.IdPessoa</th>
-                        <td>@usuario.Nome</td>
-                        <td>@usuario.Login</td>
-                        <td>@usuario.Perfil</td>
-                        <td>@usuario.DataCadastro</td>
+                        <th scope="row">@pessoa.Id</th>
+                        <td>@pessoa.Nome</td>
+                        <td>@pessoa.CPF</td>
+                        <td>@pessoa.DataNascimento.ToString("dd/MM/yyyy")</td>
+                        <td>@pessoa.Email</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a role="button" asp-action="Editar" asp-controller="Usuario" asp-route-id="@usuario.Id" class="btn btn-primary">Editar</a>
-                                <a role="button" asp-action="ApagarConfirmacao" asp-controller="Usuario" asp-route-id="@usuario.Id" class="btn btn-danger">Apagar</a>
+                                <a role="button" class="btn btn-primary" asp-route-id="@pessoa.Id" asp-controller="Pessoa" asp-action="Editar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@pessoa.Id" asp-controller="Pessoa" asp-action="ApagarConfirmacao">Apagar</a>
                             </div>
                         </td>
                     </tr>
+
                 }
             }
             else
             {
-                <tr class="odd"><td valign="top" colspan="5">Nenhum usuário encontrado</td></tr>
+                <tr class="odd"><td valign="top" colspan="5">Nenhuma pessoa encontrada</td></tr>
             }
         </tbody>
     </table>
-
-
 
 </div>

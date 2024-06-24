@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ControleDeUsuarios.Migrations
+namespace SistemaDeCadastro.Migrations
 {
-    public partial class CriandoTabelasUsuarios : Migration
+    public partial class CriandoTabelasPessoas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "Pessoas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,14 +20,14 @@ namespace ControleDeUsuarios.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_Pessoas", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Pessoas");
         }
     }
 }

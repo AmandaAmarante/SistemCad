@@ -1,11 +1,12 @@
-﻿using ControleDeUsuarios.Models;
+﻿using SistemaDeCadastro.Models;
 using Microsoft.EntityFrameworkCore;
+using SistemaDeCadastro.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ControleDeUsuarios.Data
+namespace SistemaDeCadastro.Data
 {
     public class BancoContext : DbContext
     {
@@ -14,6 +15,7 @@ namespace ControleDeUsuarios.Data
         {
         }
 
+        public DbSet<PessoaModel> Pessoas { get; set; }
         public DbSet<UsuarioModel> Usuarios { get; set; }
     }
 }
