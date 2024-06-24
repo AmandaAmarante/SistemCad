@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaDeCadastro.Filters;
 using SistemaDeCadastro.Models;
 using SistemaDeCadastro.Repositorio;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SistemaDeCadastro.Controllers
 {
+    [PaginaRestritaSomenteAdmin]
     public class UsuarioController : Controller
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;

@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using SistemaDeCadastro.Filters;
 
 namespace SistemaDeCadastro.Controllers
 {
+    [PaginaParaUsuarioLogado]
     public class HomeController : Controller
     {
 
